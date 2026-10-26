@@ -1,11 +1,17 @@
 package org.example.servinet.ui.controllers.center;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.example.servinet.core.application.dto.ClientCreateDto;
+import org.example.servinet.core.application.dto.SaleSumaryDto;
 import org.example.servinet.core.application.usecase.ClientsUseCase;
 import org.example.servinet.core.application.usecase.PaymentsUseCase;
 import org.example.servinet.core.application.usecase.PlanUseCase;
@@ -204,89 +210,44 @@ public class VentasFormController {
         String dni = (txtDni != null && txtDni.getText() != null) ? txtDni.getText().trim() : "";
         String telefono = (txtTelefono != null && txtTelefono.getText() != null) ? txtTelefono.getText().trim() : "";
         String email = (txtEmail != null && txtEmail.getText() != null) ? txtEmail.getText().trim() : "";
+        String direccion = (txtDireccion != null && txtDireccion.getText() != null) ? txtDireccion.getText().trim() : "";
 
-        // Validaciones
-        if (nombre.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campo Incompleto", "Ingresa el nombre del cliente.");
-            txtNombre.requestFocus();
+        // Campo de observación (asegúrate de tener tu txtObservacion en la vista y declarada arriba)
+        String observacion = (txtObservacion != null && txtObservacion.getText() != null) ? txtObservacion.getText().trim() : "";
+
+        // Validaciones básicas de campos vacíos
+        if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || telefono.isEmpty() ||
+                cmbPlan.getValue() == null || cmbMetodoPago.getValue() == null || selectedComprobanteFile == null) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Campos Incompletos", "Por favor completa todos los datos requeridos y adjunta el comprobante.");
             return;
         }
 
-        if (apellido.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campo Incompleto", "Ingresa el apellido del cliente.");
-            txtApellido.requestFocus();
-            return;
-        }
-
-        if (dni.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campo Incompleto", "Ingresa el DNI del cliente.");
-            txtDni.requestFocus();
-            return;
-        }
-
-        if (telefono.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campo Incompleto", "Ingresa el número de teléfono.");
-            txtTelefono.requestFocus();
-            return;
-        }
-
-        if (cmbPlan == null || cmbPlan.getValue() == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Selección Requerida", "Debes seleccionar un plan de internet.");
-            cmbPlan.requestFocus();
-            return;
-        }
-
-        if (cmbMetodoPago == null || cmbMetodoPago.getValue() == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Selección Requerida", "Debes seleccionar un método de pago.");
-            cmbMetodoPago.requestFocus();
-            return;
-        }
-
-        if (selectedComprobanteFile == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Comprobante Faltante", "Debes adjuntar la imagen del comprobante.");
-            return;
-        }
-
+        // Validación de DNI (8 dígitos)
         if (!dni.matches("\\d{8}")) {
             mostrarAlerta(Alert.AlertType.WARNING, "DNI Inválido", "El DNI debe tener exactamente 8 dígitos.");
             txtDni.requestFocus();
             return;
         }
 
-        if (!telefono.matches("\\d{7,9}")) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Teléfono Inválido", "El teléfono debe tener entre 7 y 9 dígitos.");
-            txtTelefono.requestFocus();
-            return;
-        }
-
-        if (!email.isEmpty() && !email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Correo Inválido", "El formato de correo es incorrecto.");
-            txtEmail.requestFocus();
-            return;
-        }
-
         try {
-            byte[] imageBytes = convertirArchivoABytes(selectedComprobanteFile);
             ClientPlan planSeleccionado = cmbPlan.getValue();
             BigDecimal monto = BigDecimal.valueOf(planSeleccionado.getPrice() != null ? planSeleccionado.getPrice() : 0.0);
             String metodo = cmbMetodoPago.getValue();
 
-            // 1. Crear el DTO usando el constructor directamente
+            // 1. Registrar cliente y orden en la BD
             ClientCreateDto clientDto = new ClientCreateDto(
                     dni,
                     nombre,
                     apellido,
                     telefono,
-                    txtDireccion != null ? txtDireccion.getText().trim() : "", // address (si no lo pides en la vista, puedes mandar cadena vacía o el campo respectivo)
+                    direccion,
                     email,
-                    telefono, // (puedes usar el teléfono si es el mismo)
+                    telefono,
                     planSeleccionado
             );
-
-            // 2. Llamar a ClientsUseCase para ejecutar sp_CreateOrder
             ClientsUseCase.addClientOrder(clientDto);
 
-            // 3. Registrar el pago pendiente llamando al método que invoca a sp_CreatePendingPayment
+            // 2. Registrar el pago pendiente en la BD
             Payment paymentRegistrado = PaymentsUseCase.generateNewPaidsUser(
                     dni,
                     monto,
@@ -295,11 +256,37 @@ public class VentasFormController {
 
             if (paymentRegistrado != null) {
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "El contrato y el pago fueron registrados correctamente.");
+
+                // 3. EMPAQUETAR DATOS EN EL DTO Y ABRIR LA VENTANA DE RESUMEN (MODAL)
+                SaleSumaryDto summaryDto = new SaleSumaryDto(
+                        nombre + " " + apellido,
+                        dni,
+                        planSeleccionado.getName(),
+                        String.valueOf(planSeleccionado.getSpeed()),
+                        monto,
+                        metodo,
+                        observacion,
+                        selectedComprobanteFile
+                );
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/servinet/center/resumen-pago.fxml"));
+                Parent root = loader.load();
+
+                ResumenPagoController resumenController = loader.getController();
+                resumenController.initData(summaryDto);
+
+                Stage stage = new Stage();
+                stage.setTitle("Resumen de Contrato y Pago");
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(new Scene(root));
+                stage.showAndWait(); // Pausa la ventana principal hasta que cierren el resumen
+
+                // 4. Redirigir al menú de ventas al cerrar el modal
                 if (indexController != null) {
-                    indexController.renderizarFxml("ventas-menu.fxml");
+                    indexController.renderizarFxml("sell.fxml");
                 }
             } else {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo registrar el pago pendiente en la base de datos.");
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo registrar el pago en la base de datos.");
             }
 
         } catch (Exception e) {

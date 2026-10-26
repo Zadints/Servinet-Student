@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane styleClass="content-style" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.servinet.ui.controllers.center.ResumenPagoController">
+
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="transparent-scroll" vbarPolicy="AS_NEEDED" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+        <VBox spacing="20" style="-fx-padding: 25;">
+
+            <!-- ENCABEZADO -->
+            <VBox spacing="5">
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="primary-text" text="Resumen de Contrato y Pago"/>
+                <Label styleClass="tertiary-text" text="Detalles del registro exitoso y comprobante adjunto."/>
+            </VBox>
+
+            <!-- SECCIÓN: DETALLES GENERALES -->
+            <VBox spacing="10" styleClass="admin-option">
+                <Label styleClass="admin-option-title" text="Información de la venta"/>
+                <Label styleClass="admin-option-description" text="Datos registrados en el sistema."/>
+
+                <GridPane hgap="15" vgap="12">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="130.0"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                    </columnConstraints>
+
+                    <Label styleClass="secondary-text" text="Cliente:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Label fx:id="lblCliente" styleClass="primary-text" text="-" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                    <Label styleClass="secondary-text" text="Plan contratado:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <Label fx:id="lblPlan" styleClass="primary-text" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                    <Label styleClass="secondary-text" text="Monto a pagar:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <Label fx:id="lblMonto" styleClass="primary-text" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                    <Label styleClass="secondary-text" text="Método de pago:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <Label fx:id="lblMetodo" styleClass="primary-text" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                    <Label styleClass="secondary-text" text="Observación:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                    <Label fx:id="lblObservacion" styleClass="tertiary-text" text="-" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                </GridPane>
+            </VBox>
+
+            <!-- SECCIÓN: COMPROBANTE -->
+            <VBox alignment="CENTER" spacing="10" styleClass="admin-option">
+                <Label styleClass="admin-option-title" text="Comprobante de pago"/>
+                <Label styleClass="admin-option-description" text="Imagen adjunta del voucher o recibo."/>
+
+                <ImageView fx:id="imgComprobanteResumen" fitHeight="180.0" fitWidth="260.0" preserveRatio="true" style="-fx-border-color: #e0e0e0; -fx-border-radius: 6; -fx-padding: 5;"/>
+            </VBox>
+
+            <!-- ACCIÓN DE CIERRE -->
+            <HBox alignment="CENTER_RIGHT" spacing="12">
+                <Button fx:id="btnCerrar" onAction="#cerrarModal" prefWidth="200" styleClass="admin-button" text="Aceptar y Continuar"/>
+            </HBox>
+
+        </VBox>
+
+    </ScrollPane>
+
+</AnchorPane>

@@ -71,7 +71,7 @@ public class ClientModel {
         }
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, new GenerateIdUseCase(new UuidGenerator()).toString());
+            stmt.setString(1, new UuidGenerator().generate());
             stmt.setString(2, client.getDni());
             stmt.setString(3, client.getFirstName());
             stmt.setString(4, client.getLastName());
@@ -79,7 +79,9 @@ public class ClientModel {
             stmt.setString(6, client.getAddress());
             stmt.setString(7, client.getEmail());
             stmt.setString(8, whatsAppNum);
-            stmt.setObject(10, new GenerateIdUseCase(new UuidGenerator()).toString());
+            stmt.setString(9, client.getPlan().getId());
+            String reportIdStr = java.util.UUID.randomUUID().toString();
+            stmt.setString(10, reportIdStr);
 
             stmt.executeUpdate();
 

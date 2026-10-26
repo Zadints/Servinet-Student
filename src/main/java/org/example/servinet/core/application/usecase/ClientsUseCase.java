@@ -116,6 +116,7 @@ public class ClientsUseCase {
                 null
         );
         newClient.setPlan(dto.getPlan());
+        ClientModel.setOrderDatabase(newClient, whatsApp);
         newClient.addNewPayments(
                 PaymentsUseCase.generateNewPaidsUser(
                         dto.getDni(),
@@ -138,7 +139,7 @@ public class ClientsUseCase {
 
 
 
-        ClientModel.setOrderDatabase(newClient, whatsApp);
+
         listClients.add(0, newClient);
 
         return null;
@@ -302,8 +303,4 @@ public class ClientsUseCase {
                 .sorted(Comparator.comparingInt(Client::getScorePayment))
                 .toList();
     }
-
-
-
-
 }

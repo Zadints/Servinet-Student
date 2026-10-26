@@ -6,6 +6,7 @@ import org.example.servinet.core.domain.enums.ClientStatus;
 import org.example.servinet.core.domain.enums.PlanStatusClient;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Client{
@@ -22,7 +23,8 @@ public class Client{
     private ClientStatus clientStatus;  //ve si se retiro mijines o sigue cinsumiendo inter de la empresa
     private PlanStatusClient planStatus; //ve el estado de pago del client
     private Image routerImage;
-
+    private List<Payment> PendingPayments = new ArrayList<>();
+    private List<Payment> allPayments = new ArrayList<>();
     private PaymentsScore payments;
 
 
@@ -189,7 +191,13 @@ public class Client{
         this.payments = payments;
     }
 
-    public void addNewPayments(Payment payments) {
-        this.payments.addNewPayments(payments);
+    public void addNewPayments(Payment newPaid) {
+        // Si el objeto PaymentsScore es nulo, lo inicializamos de forma segura
+        if (this.payments == null) {
+            this.payments = new PaymentsScore(new ArrayList<>(), new ArrayList<>(), null);
+        }
+
+        // Delegamos toda la lógica de adición al objeto PaymentsScore
+        this.payments.addNewPayments(newPaid);
     }
 }

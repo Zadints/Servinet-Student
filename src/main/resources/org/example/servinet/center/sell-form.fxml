@@ -98,7 +98,7 @@
 
                     <TextField
                             fx:id="txtNombre"
-                            promptText="Nombre completo"
+                            promptText="Nombres"
                             styleClass="secondary-input"
                             GridPane.columnIndex="1"
                             GridPane.rowIndex="0"/>
@@ -114,7 +114,7 @@
 
                     <TextField
                             fx:id="txtApellido"
-                            promptText="8 dígitos"
+                            promptText="Apellidos"
                             styleClass="secondary-input"
                             GridPane.columnIndex="3"
                             GridPane.rowIndex="0"/>
@@ -144,7 +144,7 @@
 
                     <TextField
                             fx:id="txtDni"
-                            promptText="Dirección del cliente"
+                            promptText="DNI"
                             styleClass="secondary-input"
                             GridPane.columnIndex="3"
                             GridPane.rowIndex="1"/>
@@ -160,7 +160,7 @@
 
                     <TextField
                             fx:id="txtDireccion"
-                            promptText="Sector o zona"
+                            promptText="Dirección del cliente"
                             styleClass="secondary-input"
                             GridPane.columnIndex="1"
                             GridPane.rowIndex="2"/>
