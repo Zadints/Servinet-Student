@@ -80,37 +80,47 @@ public class AntennaModel {
     public static void setAntennaDatabase(Antenna ant) {
 
         String sql = """
-        
-        INSERT INTO antennas (
-             uuid,
-             name,
-             for_repair,
-             for_maintenance,
-             date_create,
-             date_last_maintenance,
-             image,
-             status
-         )
-        VALUES (?, ?, ?, ?, ?, ?, ?,?);
-        """;
+    INSERT INTO antennas (
+         uuid,
+         priority,
+         name,
+         for_repair,
+         for_maintenance,
+         date_create,
+         date_last_maintenance,
+         count_days_on,
+         count_days_off,
+         image,
+         status
+     )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    """;
 
         Connection conn = LoadDb.getConnection();
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, ant.getUuid());
-            stmt.setString(2, ant.getName());
-            stmt.setBoolean(3, ant.isForReair());
-            stmt.setBoolean(4, ant.isForMaintenance());
-            stmt.setTimestamp(5, Timestamp.valueOf(ant.getDateCreate()));
-            stmt.setTimestamp(6, Timestamp.valueOf(ant.getDateLastMaintenance()));
-            stmt.setInt(7, ant.getCountDaysOn());
-            stmt.setInt(8, ant.getCountDaysOff());
+            stmt.setShort(2, ant.getPriority());
+            stmt.setString(3, ant.getName());
+            stmt.setBoolean(4, ant.isForReair()); // Asegúrate si tu getter es isForRepair o isForReair
+            stmt.setBoolean(5, ant.isForMaintenance());
+            stmt.setTimestamp(6, ant.getDateCreate() != null ? Timestamp.valueOf(ant.getDateCreate()) : null);
+            stmt.setTimestamp(7, ant.getDateLastMaintenance() != null ? Timestamp.valueOf(ant.getDateLastMaintenance()) : null);
+            stmt.setInt(8, ant.getCountDaysOn());
+            stmt.setInt(9, ant.getCountDaysOff());
+
+            // Convertir la imagen a bytes si existe (asumiendo que tienes un método auxiliar o de conversión)
+            // Si ant.getImage() devuelve Image de JavaFX, usa ImageConverter.toBytes(...) o ajústalo según tu lógica
+            stmt.setBytes(10, ImageConverter.toBytes(ant.getImage()));
+
+            stmt.setString(11, ant.getStatus() != null ? ant.getStatus().name() : "ACTIVE");
+
             stmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new DatabaseException(
-                    "Error al guardar el usuario en la base de datos", e
+                    "Error al guardar la antena en la base de datos", e
             );
         }
     }

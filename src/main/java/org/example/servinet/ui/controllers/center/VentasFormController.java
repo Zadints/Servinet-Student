@@ -48,13 +48,46 @@ public class VentasFormController {
     @FXML private Label lblResumenMonto;
 
     private File selectedComprobanteFile;
+    // Declarar los fx:id de tus tarjetas en el FXML
+    @FXML private Label lblMonthlySales;
+    @FXML private Label lblTodaySales;
+    @FXML private Label lblMonthlyCommission;
+    @FXML private Label lblMonthlyGoal;
 
     // ¡IMPRESCINDIBLE LA ANOTACIÓN @FXML!
     @FXML
     public void initialize() {
         System.out.println(">>> INICIALIZANDO VENTASFORMCONTROLLER <<<");
         cargarDatosVentana();
+        ClientsUseCase.loadClientsAndOrders();
+        cargarResumenVentas();
     }
+    private void cargarResumenVentas() {
+        try {
+            // 1. Obtener los valores reales
+            long ventasMes = ClientsUseCase.contarVentasDelMes();
+            long ventasHoy = ClientsUseCase.contarVentasDeHoy();
+
+            // 2. Calcular comisión estimada (Ejemplo: S/ 15.00 por cada contrato del mes)
+            double comisionPorVenta = 15.00;
+            double comisionTotal = ventasMes * comisionPorVenta;
+
+            // 3. Calcular objetivo mensual (Ejemplo: Meta fija de 20 contratos)
+            int metaMensual = 20;
+            double porcentajeProgreso = metaMensual > 0 ? ((double) ventasMes / metaMensual) * 100 : 0;
+            if (porcentajeProgreso > 100) porcentajeProgreso = 100; // Tope máximo opcional
+
+            // 4. Asignar los textos a los Labels de la interfaz
+            if (lblMonthlySales != null) lblMonthlySales.setText(String.valueOf(ventasMes));
+            if (lblTodaySales != null) lblTodaySales.setText(String.valueOf(ventasHoy));
+            if (lblMonthlyCommission != null) lblMonthlyCommission.setText(String.format("S/ %.2f", comisionTotal));
+            if (lblMonthlyGoal != null) lblMonthlyGoal.setText(String.format("%.0f %%", porcentajeProgreso));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void setIndexController(IndexController indexController) {
         this.indexController = indexController;
@@ -125,6 +158,15 @@ public class VentasFormController {
                 }
             });
         }
+        if (txtTelefono != null) {
+            txtTelefono.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    if (!newValue.matches("\\d*") || newValue.length() > 9) {
+                        txtTelefono.setText(oldValue == null ? "" : oldValue);
+                    }
+                }
+            });
+        }
 
         // 4. Listener para actualizar el resumen cuando cambie el nombre
         if (txtNombre != null) {
@@ -188,7 +230,7 @@ public class VentasFormController {
         alert.showAndWait().ifPresent(response -> {
             if (response.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
                 if (indexController != null) {
-                    indexController.renderizarFxml("ventas-menu.fxml");
+                    indexController.renderizarFxml("sell.fxml");
                 }
             }
         });
@@ -197,7 +239,7 @@ public class VentasFormController {
     @FXML
     public void cancelForm() {
         if (indexController != null) {
-            indexController.renderizarFxml("ventas-menu.fxml");
+            indexController.renderizarFxml("sell.fxml");
         }
     }
 
@@ -226,6 +268,11 @@ public class VentasFormController {
         if (!dni.matches("\\d{8}")) {
             mostrarAlerta(Alert.AlertType.WARNING, "DNI Inválido", "El DNI debe tener exactamente 8 dígitos.");
             txtDni.requestFocus();
+            return;
+        }
+        if (!telefono.matches("\\d{9}")) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Celular Inválido", "El numero de celular debe tener exactamente 9 dígitos.");
+            txtTelefono.requestFocus();
             return;
         }
 

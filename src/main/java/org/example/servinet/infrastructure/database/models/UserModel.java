@@ -291,7 +291,6 @@ public class UserModel {
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, user.getEmail());
-
             stmt.setString(2, user.getUuid());
             stmt.setString(3, user.getName());
             stmt.setString(4, user.getEmail());

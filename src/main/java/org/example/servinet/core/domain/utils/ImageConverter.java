@@ -1,9 +1,13 @@
 package org.example.servinet.core.domain.utils;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import org.example.servinet.core.domain.exception.FileExistException;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -44,5 +48,18 @@ public class ImageConverter {
 
     public static byte[] toBytes(Path image) throws IOException {
         return Files.readAllBytes(image);
+    }
+    public static byte[] toBytes(Image image) {
+        if (image == null) {
+            return null;
+        }
+        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            ImageIO.write(bufferedImage, "png", baos);
+            return baos.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

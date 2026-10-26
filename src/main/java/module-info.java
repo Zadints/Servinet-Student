@@ -21,6 +21,7 @@ module org.example.servinet {
     requires java.desktop;
     requires com.fasterxml.jackson.databind;
     requires javafx.graphics;
+    requires javafx.swing;
     opens org.example.servinet to javafx.fxml;
     opens org.example.servinet.ui.controllers to javafx.fxml;
     opens org.example.servinet.ui.controllers.center to javafx.fxml;

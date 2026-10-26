@@ -25,6 +25,37 @@ public class ClientsUseCase {
     private static List<Client> listClients = new ArrayList<>();
     private static List<OrderReportDto> listOrdersClients = new ArrayList<>();
 
+    public static long contarVentasDelMes() {
+        LocalDate ahora = LocalDate.now();
+        List<Client> clientes = getAllClients();
+        if (clientes == null) return 0;
+
+        System.out.println("--- DEPURANDO CLIENTES CARGADOS ---");
+        for (Client c : clientes) {
+            System.out.println("Cliente DNI: " + c.getDni() + " | Fecha Creación: " + c.getDateCreate());
+        }
+
+        return clientes.stream()
+                .filter(c -> {
+                    if (c.getDateCreate() == null) return false;
+                    // Si getDateCreate() es LocalDateTime o Timestamp, usa .toLocalDate() para comparar de forma segura
+                    LocalDate fechaClient = c.getDateCreate().toLocalDate();
+                    return fechaClient.getYear() == ahora.getYear() &&
+                            fechaClient.getMonth() == ahora.getMonth();
+                })
+                .count();
+    }
+
+    public static long contarVentasDeHoy() {
+        LocalDate hoy = LocalDate.now();
+        List<Client> clientes = getAllClients();
+        if (clientes == null) return 0;
+
+        return clientes.stream()
+                .filter(c -> c.getDateCreate() != null &&
+                        c.getDateCreate().toLocalDate().isEqual(hoy))
+                .count();
+    }
     /*Core method*/
     public static void loadClientsAndOrders() {
         listOrdersClients.clear();
