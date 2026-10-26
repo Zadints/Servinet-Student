@@ -140,7 +140,7 @@ public class ClientsUseCase {
                 dto.getLastName().trim(),
                 dto.getPhone(),
                 dto.getAddress(),
-                null,
+                LocalDateTime.now(),
                 LocalDateTime.now(),
                 ClientStatus.ACTIVO,
                 PlanStatusClient.AL_DIA,
