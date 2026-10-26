@@ -18,6 +18,7 @@ import org.example.servinet.ui.controllers.IndexController;
 import org.example.servinet.ui.controllers.components.ClienteRowController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,9 +45,6 @@ public class ClientesController {
     }
 
     public void initialize() {
-        renderClients(ClientsUseCase.getAllClients());
-        updateSummary();
-        updateRankingCard();
 
         loadClientsInBackground();
     }
@@ -70,7 +68,7 @@ public class ClientesController {
             clientsList.getChildren().add(empty);
             return;
         }
-
+        List<Client> clientsCopy = new ArrayList<>(clients);
         for (Client client : clients) {
             addClientRow(client);
         }

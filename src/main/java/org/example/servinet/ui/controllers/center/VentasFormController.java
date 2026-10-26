@@ -62,19 +62,7 @@ public class VentasFormController {
     }
 
     private void cargarDatosVentana() {
-        // 1. Cargar planes desde el pool hacia el ComboBox
-        // PRUEBA SIMPLE: Mostrar un mensaje cuando selecciones un plan
-        if (cmbPlan != null) {
-            cmbPlan.valueProperty().addListener((obs, oldVal, newVal) -> {
-                if (newVal != null) {
-                    mostrarAlerta(
-                            Alert.AlertType.INFORMATION,
-                            "Plan Seleccionado",
-                            "Elegiste: " + newVal.getName() + " - S/ " + newVal.getPrice()
-                    );
-                }
-            });
-        }
+        // 1. Cargar planes desde el pool hacia el ComboBox y unificar listeners
         if (cmbPlan != null) {
             cmbPlan.getItems().setAll(PlanUseCase.getPoolPlans());
 
@@ -103,6 +91,23 @@ public class VentasFormController {
                     }
                 }
             });
+
+            // Listener unificado: actualiza el resumen y opcionalmente muestra la alerta de prueba
+            cmbPlan.valueProperty().addListener((obs, oldVal, newVal) -> {
+                if (newVal != null) {
+                    // Si la alerta era solo de prueba temporal, puedes comentarla o borrarla:
+                /*
+                mostrarAlerta(
+                        Alert.AlertType.INFORMATION,
+                        "Plan Seleccionado",
+                        "Elegiste: " + newVal.getName() + " - S/ " + newVal.getPrice()
+                );
+                */
+
+                    // Actualiza el resumen en tiempo real
+                    actualizarResumen();
+                }
+            });
         }
 
         // 2. Poblar Métodos de Pago (si está vacío)
@@ -121,14 +126,9 @@ public class VentasFormController {
             });
         }
 
-        // 4. Listener para nombre en el panel lateral
+        // 4. Listener para actualizar el resumen cuando cambie el nombre
         if (txtNombre != null) {
             txtNombre.textProperty().addListener((obs, oldVal, newVal) -> actualizarResumen());
-        }
-
-        // 5. Listener para actualizar el resumen cuando cambie el plan seleccionado
-        if (cmbPlan != null) {
-            cmbPlan.valueProperty().addListener((obs, oldVal, newVal) -> actualizarResumen());
         }
     }
 

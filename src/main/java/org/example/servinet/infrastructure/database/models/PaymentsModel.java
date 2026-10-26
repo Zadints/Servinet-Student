@@ -143,21 +143,26 @@ public class PaymentsModel {
                     LocalDateTime datePaid = timestamp != null
                             ? timestamp.toLocalDateTime()
                             : null;
-
-
+                    String paymentMethodStr = rs.getString("payment_method");
+                    PayMethods payMethod = null;
+                    if (paymentMethodStr != null && !paymentMethodStr.trim().isEmpty()) {
+                        try {
+                            payMethod = PayMethods.valueOf(paymentMethodStr.trim().toUpperCase());
+                        } catch (IllegalArgumentException e) {
+                            payMethod = PayMethods.EFECTIVO; // Valor seguro por defecto
+                        }
+                    }
                     Payment payment = new Payment(
                             rs.getString("payment_id"),
                             rs.getString("client_dni"),
                             rs.getBigDecimal("payment_amount"),
                             datePaid,
-                            PayMethods.valueOf(rs.getString("payment_method")),
+                            payMethod, // <--- Usar la variable segura aquí
                             rs.getBoolean("payment_ispaid"),
                             ImageConverter.toImage(rs.getBytes("payment_image")),
                             rs.getString("payment_description"),
                             rs.getString("payment_reference")
-
                     );
-
                     payments.add(payment);
                 }
             }
