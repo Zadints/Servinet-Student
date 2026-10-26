@@ -33,7 +33,7 @@ public class PaymentsUseCase {
     public static Payment generateNewPaidsUser(String dni, BigDecimal mount, String mes) {
 
         Payment newPayment = new Payment(
-            new GenerateIdUseCase(new UuidGenerator()).toString(),
+            java.util.UUID.randomUUID().toString(),
             dni,
             mount,
             null,

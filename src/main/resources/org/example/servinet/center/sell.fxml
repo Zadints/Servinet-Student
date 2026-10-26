@@ -232,7 +232,7 @@
                     <!-- OFERTAS -->
 
                     <VBox
-                            spacing="10"
+                            spacing="11"
                             styleClass="admin-option"
                             GridPane.columnIndex="1">
 
@@ -254,29 +254,7 @@
                     </VBox>
 
 
-                    <!-- CONTRATOS -->
 
-                    <VBox
-                            spacing="10"
-                            styleClass="admin-option"
-                            GridPane.columnIndex="2">
-
-                        <Label
-                                styleClass="admin-option-title"
-                                text="Mis contratos"/>
-
-                        <Label
-                                styleClass="admin-option-description"
-                                text="Consulta y edita los contratos registrados por ti."
-                                wrapText="true"/>
-
-                        <Button
-                                maxWidth="Infinity"
-                                onAction="#showContracts"
-                                styleClass="admin-button"
-                                text="Gestionar contratos"/>
-
-                    </VBox>
 
                 </GridPane>
 
@@ -734,96 +712,6 @@
 
             </VBox>
 
-
-            <!-- ================================================= -->
-            <!-- CLIENTES POTENCIALES -->
-            <!-- ================================================= -->
-
-            <VBox
-                    spacing="15"
-                    styleClass="admin-option">
-
-                <HBox
-                        alignment="CENTER_LEFT">
-
-                    <VBox spacing="3">
-
-                        <Label
-                                styleClass="primary-text"
-                                text="Clientes potenciales"/>
-
-                        <Label
-                                styleClass="tertiary-text"
-                                text="Personas interesadas que aún no han completado un contrato."/>
-
-                    </VBox>
-
-                    <Pane HBox.hgrow="ALWAYS"/>
-
-                    <Button
-                            onAction="#showProspects"
-                            styleClass="secondary-button"
-                            text="Ver clientes"/>
-
-                </HBox>
-
-
-                <HBox
-                        spacing="12">
-
-                    <VBox
-                            spacing="5"
-                            styleClass="admin-option"
-                            HBox.hgrow="ALWAYS">
-
-                        <Label
-                                styleClass="secondary-text"
-                                text="Nuevos interesados"/>
-
-                        <Label
-                                fx:id="lblNewProspects"
-                                styleClass="primary-text"
-                                text="0"/>
-
-                    </VBox>
-
-
-                    <VBox
-                            spacing="5"
-                            styleClass="admin-option"
-                            HBox.hgrow="ALWAYS">
-
-                        <Label
-                                styleClass="secondary-text"
-                                text="Por contactar"/>
-
-                        <Label
-                                fx:id="lblPendingProspects"
-                                styleClass="primary-text"
-                                text="0"/>
-
-                    </VBox>
-
-
-                    <VBox
-                            spacing="5"
-                            styleClass="admin-option"
-                            HBox.hgrow="ALWAYS">
-
-                        <Label
-                                styleClass="secondary-text"
-                                text="Seguimientos"/>
-
-                        <Label
-                                fx:id="lblFollowUps"
-                                styleClass="primary-text"
-                                text="0"/>
-
-                    </VBox>
-
-                </HBox>
-
-            </VBox>
 
 
             <!-- ================================================= -->

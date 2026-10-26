@@ -5,6 +5,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import org.example.servinet.core.application.dto.ClientCreateDto;
+import org.example.servinet.core.application.usecase.ClientsUseCase;
 import org.example.servinet.core.application.usecase.PaymentsUseCase;
 import org.example.servinet.core.application.usecase.PlanUseCase;
 import org.example.servinet.core.domain.entities.ClientPlan;
@@ -270,6 +272,22 @@ public class VentasFormController {
             BigDecimal monto = BigDecimal.valueOf(planSeleccionado.getPrice() != null ? planSeleccionado.getPrice() : 0.0);
             String metodo = cmbMetodoPago.getValue();
 
+            // 1. Crear el DTO usando el constructor directamente
+            ClientCreateDto clientDto = new ClientCreateDto(
+                    dni,
+                    nombre,
+                    apellido,
+                    telefono,
+                    txtDireccion != null ? txtDireccion.getText().trim() : "", // address (si no lo pides en la vista, puedes mandar cadena vacía o el campo respectivo)
+                    email,
+                    telefono, // (puedes usar el teléfono si es el mismo)
+                    planSeleccionado
+            );
+
+            // 2. Llamar a ClientsUseCase para ejecutar sp_CreateOrder
+            ClientsUseCase.addClientOrder(clientDto);
+
+            // 3. Registrar el pago pendiente llamando al método que invoca a sp_CreatePendingPayment
             Payment paymentRegistrado = PaymentsUseCase.generateNewPaidsUser(
                     dni,
                     monto,
@@ -277,12 +295,12 @@ public class VentasFormController {
             );
 
             if (paymentRegistrado != null) {
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "El contrato y el pago fueron registrados.");
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "El contrato y el pago fueron registrados correctamente.");
                 if (indexController != null) {
                     indexController.renderizarFxml("ventas-menu.fxml");
                 }
             } else {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo registrar el pago en la base de datos.");
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo registrar el pago pendiente en la base de datos.");
             }
 
         } catch (Exception e) {

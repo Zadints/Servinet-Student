@@ -84,6 +84,7 @@ public class ClientModel {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new DatabaseException(
                     "No se pudo crear el pedido "
             );
@@ -134,6 +135,7 @@ public class ClientModel {
 
         String sql = """
         EXEC sp_updateClient
+            @order_id = ?,
             @client_dni = ?,
             @client_name = ?,
             @client_last_name = ?,
@@ -141,7 +143,8 @@ public class ClientModel {
             @client_address = ?,
             @client_email = ?,
             @client_whatsapp = ?,
-            @plan_id = ?;
+            @plan_id = ?,
+            @report_id = ?;
         """;
 
         Connection conn = LoadDb.getConnection();
@@ -155,16 +158,20 @@ public class ClientModel {
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, client.getDni());
-            stmt.setString(2, client.getFirstName());
-            stmt.setString(3, client.getLastName());
-            stmt.setString(4, client.getPhone());
-            stmt.setString(5, client.getAddress());
-            stmt.setString(6, client.getEmail());
+            stmt.setString(1, new GenerateIdUseCase(new UuidGenerator()).toString());
+            stmt.setString(2, client.getDni());
+            stmt.setString(3, client.getFirstName());
+            stmt.setString(4, client.getLastName());
+            stmt.setString(5, client.getPhone());
+            stmt.setString(6, client.getAddress());
+            stmt.setString(7, client.getEmail());
+            stmt.setString(8, whatsApp);
 
-            stmt.setString(7,whatsApp);
+            // ¡CORRECCIÓN: Asignar el plan_id en el índice 9!
+            stmt.setString(9, client.getPlan().getId());
 
-            stmt.setString(8, client.getPlan().getId());
+            // Asignar el report_id en el índice 10
+            stmt.setObject(10, new GenerateIdUseCase(new UuidGenerator()).toString());
 
             stmt.executeUpdate();
 

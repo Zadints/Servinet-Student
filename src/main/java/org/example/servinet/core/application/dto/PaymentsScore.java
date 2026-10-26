@@ -28,6 +28,8 @@ public class PaymentsScore {
         this.ActualPayments = newPaid;
         this.PendingPayments.add(newPaid);
         this.allPayments.add(newPaid);
+        // Actualizar el contador de pagos pendientes para que refleje el nuevo elemento
+        this.countPendingPayments = this.PendingPayments.size();
     }
 
     public List<Payment> getAllPayments() {

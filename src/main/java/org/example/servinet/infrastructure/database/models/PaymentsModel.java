@@ -38,13 +38,10 @@ public class PaymentsModel {
             stmt.setBigDecimal(2, payment.getAmount());
             stmt.setString(3, payment.getDescription());
             stmt.setString(4, payment.getReference());
-            stmt.setString(5, payment.getId());
-
-            stmt.executeUpdate();
-
-        } catch (SQLException e) {
+            stmt.setObject(5, java.util.UUID.fromString(payment.getId()));            stmt.executeUpdate();
+            } catch (SQLException e) {
             throw new DatabaseException(
-                    "No se pudo crear el pago pendiente",
+                    "Error SQL: " + e.getMessage(),
                     e
             );
         }
