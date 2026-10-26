@@ -173,7 +173,7 @@
 
                     <TextField
                             fx:id="txtEmail"
-                            promptText="Sector o zona"
+                            promptText="Correo"
                             styleClass="secondary-input"
                             GridPane.columnIndex="3"
                             GridPane.rowIndex="2"/>
@@ -246,29 +246,7 @@
                             GridPane.rowIndex="0"/>
 
 
-                    <VBox spacing="12"
-                          alignment="CENTER_LEFT"
-                          styleClass="secondary-text"
-                          GridPane.columnIndex="2"
-                          GridPane.columnSpan="3"
-                          GridPane.rowIndex="0">
 
-                        <Label text="Fibra 100"
-                               styleClass="plan-name"/>
-
-                        <Label text="100 Mbps"
-                               styleClass="plan-speed"/>
-
-                        <Label text="S/ 89.90"
-                               styleClass="plan-price"/>
-
-                        <Label text="PROMOCIÓN"
-                               styleClass="promo-badge"/>
-
-                        <Label text="PENDIENTE"
-                               styleClass="status-badge"/>
-
-                    </VBox>
 
 
                 </GridPane>
@@ -411,80 +389,6 @@
 
 
             <!-- ================================================= -->
-            <!-- RESUMEN -->
-            <!-- ================================================= -->
-
-            <VBox
-                    spacing="12"
-                    styleClass="admin-option">
-
-                <Label
-                        styleClass="primary-text"
-                        text="Resumen de la venta"/>
-
-                <HBox spacing="30">
-
-                    <VBox spacing="3">
-
-                        <Label
-                                styleClass="quaternary-text"
-                                text="Cliente"/>
-
-                        <Label
-                                fx:id="lblSummaryClient"
-                                styleClass="primary-text"
-                                text="Sin seleccionar"/>
-
-                    </VBox>
-
-
-                    <VBox spacing="3">
-
-                        <Label
-                                styleClass="quaternary-text"
-                                text="Plan"/>
-
-                        <Label
-                                fx:id="lblSummaryPlan"
-                                styleClass="primary-text"
-                                text="Sin seleccionar"/>
-
-                    </VBox>
-
-
-                    <VBox spacing="3">
-
-                        <Label
-                                styleClass="quaternary-text"
-                                text="Antena"/>
-
-                        <Label
-                                fx:id="lblSummaryAntenna"
-                                styleClass="primary-text"
-                                text="Sin seleccionar"/>
-
-                    </VBox>
-
-
-                    <VBox spacing="3">
-
-                        <Label
-                                styleClass="quaternary-text"
-                                text="Monto"/>
-
-                        <Label
-                                fx:id="lblSummaryAmount"
-                                styleClass="primary-text"
-                                text="S/ 0.00"/>
-
-                    </VBox>
-
-                </HBox>
-
-            </VBox>
-
-
-            <!-- ================================================= -->
             <!-- BOTONES -->
             <!-- ================================================= -->
 
@@ -500,7 +404,7 @@
                 <Button
                         onAction="#registerSale"
                         styleClass="primary-button"
-                        text="Crear contrato y enviar comprobante"/>
+                        text="Crear comprobante"/>
 
             </HBox>
 

@@ -15,6 +15,7 @@ module org.example.servinet {
     requires annotations;
     requires org.yaml.snakeyaml;
     requires net.bytebuddy;
+    requires jakarta.mail;
     requires de.mkammerer.argon2.nolibs;
     requires com.sun.jna;
     requires java.desktop;

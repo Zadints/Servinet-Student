@@ -52,8 +52,7 @@ public class VentasFormController {
 
     public void setIndexController(IndexController indexController) {
         this.indexController = indexController;
-        // Respaldo directo por si el FXMLLoader no invocó initialize()
-        cargarDatosVentana();
+
     }
 
     private void cargarDatosVentana() {
