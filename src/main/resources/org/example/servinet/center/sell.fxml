@@ -262,14 +262,6 @@
                                 text="Planes y promociones que puedes ofrecer actualmente a tus clientes."/>
 
                     </VBox>
-
-                    <Pane HBox.hgrow="ALWAYS"/>
-
-                    <Button
-                            onAction="#showOffers"
-                            styleClass="secondary-button"
-                            text="Ver todas"/>
-
                 </HBox>
 
 
@@ -506,16 +498,6 @@
             <HBox
                     alignment="CENTER_RIGHT"
                     spacing="10">
-
-                <Button
-                        onAction="#showOffers"
-                        styleClass="secondary-button"
-                        text="Consultar ofertas"/>
-
-                <Button
-                        onAction="#showStatistics"
-                        styleClass="secondary-button"
-                        text="Mis estadísticas"/>
 
                 <Button
                         onAction="#newContract"
