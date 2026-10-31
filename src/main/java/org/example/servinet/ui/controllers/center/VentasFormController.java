@@ -59,7 +59,6 @@ public class VentasFormController {
     public void initialize() {
         System.out.println(">>> INICIALIZANDO VENTASFORMCONTROLLER <<<");
         cargarDatosVentana();
-        ClientsUseCase.loadClientsAndOrders();
         cargarResumenVentas();
     }
     private void cargarResumenVentas() {

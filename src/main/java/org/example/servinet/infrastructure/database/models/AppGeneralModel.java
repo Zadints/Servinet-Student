@@ -29,7 +29,7 @@ public class AppGeneralModel {
     public static String getAppGeneralDatabase() {
 
         String sql = """
-        SELECT name
+        SELECT app_name
         FROM appGeneral
         """;
 

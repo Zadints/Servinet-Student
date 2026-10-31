@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
     <?import javafx.scene.control.*?>
     <?import javafx.scene.layout.*?>
 
@@ -145,27 +144,7 @@
                     </VBox>
 
 
-                    <!-- OBJETIVO -->
 
-                    <VBox
-                            spacing="5"
-                            styleClass="admin-option"
-                            GridPane.columnIndex="3">
-
-                        <Label
-                                styleClass="secondary-text"
-                                text="Objetivo mensual"/>
-
-                        <Label
-                                fx:id="lblMonthlyGoal"
-                                styleClass="primary-text"
-                                text="0 %"/>
-
-                        <Label
-                                styleClass="quaternary-text"
-                                text="Progreso"/>
-
-                    </VBox>
 
                 </GridPane>
 
@@ -313,7 +292,7 @@
 
                             <Label
                                     styleClass="primary-text"
-                                    text="Internet 100 Mbps"/>
+                                    text="Internet 50 Mbps"/>
 
                             <Label
                                     styleClass="secondary-text"
@@ -333,7 +312,7 @@
 
                             <Label
                                     styleClass="primary-text"
-                                    text="S/ 59.90"/>
+                                    text="S/ 39.90"/>
 
                             <Label
                                     styleClass="quaternary-text"
@@ -363,7 +342,7 @@
 
                             <Label
                                     styleClass="primary-text"
-                                    text="Internet 200 Mbps"/>
+                                    text="Internet 100 Mbps"/>
 
                             <Label
                                     styleClass="secondary-text"
@@ -383,12 +362,11 @@
 
                             <Label
                                     styleClass="primary-text"
-                                    text="S/ 79.90"/>
+                                    text="S/ 49.90"/>
 
                             <Label
                                     styleClass="quaternary-text"
                                     text="mensual"/>
-
                         </VBox>
 
 
@@ -396,204 +374,11 @@
                                 onAction="#selectOffer"
                                 styleClass="secondary-button"
                                 text="Usar oferta"/>
-
                     </HBox>
-
-
-                    <!-- OFERTA 3 -->
-
-                    <HBox
-                            alignment="CENTER_LEFT"
-                            spacing="15"
-                            styleClass="user-row">
-
-                        <VBox
-                                spacing="3"
-                                HBox.hgrow="ALWAYS">
-
-                            <Label
-                                    styleClass="primary-text"
-                                    text="Internet 300 Mbps"/>
-
-                            <Label
-                                    styleClass="secondary-text"
-                                    text="300 Mbps • Oferta promocional"/>
-
-                            <Label
-                                    styleClass="tertiary-text"
-                                    text="Mayor velocidad para clientes con alto consumo."
-                                    wrapText="true"/>
-
-                        </VBox>
-
-
-                        <VBox
-                                alignment="CENTER_RIGHT"
-                                spacing="3">
-
-                            <Label
-                                    styleClass="primary-text"
-                                    text="S/ 99.90"/>
-
-                            <Label
-                                    styleClass="quaternary-text"
-                                    text="mensual"/>
-
-                        </VBox>
-
-
-                        <Button
-                                onAction="#selectOffer"
-                                styleClass="secondary-button"
-                                text="Usar oferta"/>
-
-                    </HBox>
-
                 </VBox>
-
             </VBox>
 
 
-            <!-- ================================================= -->
-            <!-- CONTRATOS RECIENTES -->
-            <!-- ================================================= -->
-
-            <VBox
-                    spacing="15"
-                    styleClass="admin-option">
-
-                <HBox
-                        alignment="CENTER_LEFT">
-
-                    <VBox spacing="3">
-
-                        <Label
-                                styleClass="primary-text"
-                                text="Mis contratos recientes"/>
-
-                        <Label
-                                styleClass="tertiary-text"
-                                text="Últimos contratos registrados por el vendedor."/>
-
-                    </VBox>
-
-                    <Pane HBox.hgrow="ALWAYS"/>
-
-                    <Button
-                            onAction="#showContracts"
-                            styleClass="secondary-button"
-                            text="Ver contratos"/>
-
-                </HBox>
-
-
-                <VBox
-                        fx:id="recentContractsList"
-                        fillWidth="true"
-                        spacing="8">
-
-
-                    <!-- CONTRATO -->
-
-                    <HBox
-                            alignment="CENTER_LEFT"
-                            spacing="12"
-                            styleClass="user-row">
-
-                        <VBox
-                                spacing="3"
-                                HBox.hgrow="ALWAYS">
-
-                            <Label
-                                    styleClass="primary-text"
-                                    text="Nuevo contrato"/>
-
-                            <Label
-                                    styleClass="secondary-text"
-                                    text="Cliente • Internet 100 Mbps"/>
-
-                        </VBox>
-
-                        <Label
-                                styleClass="quaternary-text"
-                                text="ACTIVO"/>
-
-                        <Button
-                                onAction="#editContract"
-                                styleClass="secondary-button"
-                                text="Editar"/>
-
-                    </HBox>
-
-
-                    <!-- CONTRATO -->
-
-                    <HBox
-                            alignment="CENTER_LEFT"
-                            spacing="12"
-                            styleClass="user-row">
-
-                        <VBox
-                                spacing="3"
-                                HBox.hgrow="ALWAYS">
-
-                            <Label
-                                    styleClass="primary-text"
-                                    text="Nuevo contrato"/>
-
-                            <Label
-                                    styleClass="secondary-text"
-                                    text="Cliente • Internet 200 Mbps"/>
-
-                        </VBox>
-
-                        <Label
-                                styleClass="quaternary-text"
-                                text="PENDIENTE"/>
-
-                        <Button
-                                onAction="#editContract"
-                                styleClass="secondary-button"
-                                text="Editar"/>
-
-                    </HBox>
-
-
-                    <!-- CONTRATO -->
-
-                    <HBox
-                            alignment="CENTER_LEFT"
-                            spacing="12"
-                            styleClass="user-row">
-
-                        <VBox
-                                spacing="3"
-                                HBox.hgrow="ALWAYS">
-
-                            <Label
-                                    styleClass="primary-text"
-                                    text="Nuevo contrato"/>
-
-                            <Label
-                                    styleClass="secondary-text"
-                                    text="Cliente • Internet 50 Mbps"/>
-
-                        </VBox>
-
-                        <Label
-                                styleClass="quaternary-text"
-                                text="ACTIVO"/>
-
-                        <Button
-                                onAction="#editContract"
-                                styleClass="secondary-button"
-                                text="Editar"/>
-
-                    </HBox>
-
-                </VBox>
-
-            </VBox>
 
 
             <!-- ================================================= -->

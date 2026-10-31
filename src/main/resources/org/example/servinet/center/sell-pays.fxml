@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.*?>
+<AnchorPane
+        styleClass="content-style"
+        xmlns="http://javafx.com/javafx/17.0.12"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="org.example.servinet.ui.controllers.center.RegistrarPagoController">
+
+    <ScrollPane
+            fitToWidth="true"
+            hbarPolicy="NEVER"
+            styleClass="transparent-scroll"
+            vbarPolicy="AS_NEEDED"
+            AnchorPane.bottomAnchor="0.0"
+            AnchorPane.leftAnchor="0.0"
+            AnchorPane.rightAnchor="0.0"
+            AnchorPane.topAnchor="0.0">
+
+        <VBox
+                fillWidth="true"
+                spacing="20"
+                style="-fx-padding: 20px;">
+
+            <!-- ================================================= -->
+            <!-- TÍTULO -->
+            <!-- ================================================= -->
+
+            <VBox spacing="3">
+
+                <Label
+                        styleClass="content-title"
+                        text="Registrar Pago de Cliente"/>
+
+                <Label
+                        styleClass="tertiary-text"
+                        text="Busca un cliente, verifica sus datos y registra su comprobante de pago."/>
+
+            </VBox>
+
+
+            <!-- ================================================= -->
+            <!-- BÚSQUEDA Y DATOS DEL CLIENTE -->
+            <!-- ================================================= -->
+
+            <VBox
+                    spacing="15"
+                    styleClass="admin-option">
+
+                <VBox spacing="3">
+
+                    <Label
+                            styleClass="primary-text"
+                            text="Seleccionar Cliente"/>
+
+                    <Label
+                            styleClass="tertiary-text"
+                            text="Busca por nombre, apellido, DNI o dirección."/>
+
+                </VBox>
+
+
+                <GridPane
+                        hgap="15"
+                        vgap="12">
+
+                    <columnConstraints>
+
+                        <ColumnConstraints
+                                halignment="RIGHT"
+                                hgrow="NEVER"/>
+
+                        <ColumnConstraints
+                                hgrow="ALWAYS"
+                                minWidth="250"/>
+
+                        <ColumnConstraints
+                                halignment="RIGHT"
+                                hgrow="NEVER"/>
+
+                        <ColumnConstraints
+                                hgrow="ALWAYS"
+                                minWidth="250"/>
+
+                    </columnConstraints>
+
+
+                    <!-- BUSCADOR -->
+
+                    <Label
+                            styleClass="secondary-text"
+                            text="Buscar cliente"
+                            GridPane.columnIndex="0"
+                            GridPane.rowIndex="0"/>
+
+                    <ComboBox
+                            fx:id="cmbBuscarCliente"
+                            editable="true"
+                            maxWidth="Infinity"
+                            promptText="Escriba DNI, nombre o dirección..."
+                            styleClass="secondary-combo"
+                            GridPane.columnIndex="1"
+                            GridPane.columnSpan="3"
+                            GridPane.rowIndex="0"/>
+
+
+                    <!-- DATOS DE SOLO LECTURA (LABELS) -->
+
+                    <Label
+                            styleClass="secondary-text"
+                            text="DNI"
+                            GridPane.columnIndex="0"
+                            GridPane.rowIndex="1"/>
+
+                    <Label
+                            fx:id="lblDniClient"
+                            text="-"
+                            styleClass="primary-text"
+                            GridPane.columnIndex="1"
+                            GridPane.rowIndex="1"/>
+
+
+                    <Label
+                            styleClass="secondary-text"
+                            text="Nombre completo"
+                            GridPane.columnIndex="2"
+                            GridPane.rowIndex="1"/>
+
+                    <Label
+                            fx:id="lblNombreClient"
+                            text="-"
+                            styleClass="primary-text"
+                            GridPane.columnIndex="3"
+                            GridPane.rowIndex="1"/>
+
+
+                    <Label
+                            styleClass="secondary-text"
+                            text="Teléfono"
+                            GridPane.columnIndex="0"
+                            GridPane.rowIndex="2"/>
+
+                    <Label
+                            fx:id="lblTelefonoClient"
+                            text="-"
+                            styleClass="primary-text"
+                            GridPane.columnIndex="1"
+                            GridPane.rowIndex="2"/>
+
+
+                    <Label
+                            styleClass="secondary-text"
+                            text="Dirección"
+                            GridPane.columnIndex="2"
+                            GridPane.rowIndex="2"/>
+
+                    <Label
+                            fx:id="lblDireccionClient"
+                            text="-"
+                            styleClass="primary-text"
+                            GridPane.columnIndex="3"
+                            GridPane.rowIndex="2"/>
+
+
+                    <Label
+                            styleClass="secondary-text"
+                            text="Email"
+                            GridPane.columnIndex="0"
+                            GridPane.rowIndex="3"/>
+
+                    <Label
+                            fx:id="lblEmailClient"
+                            text="-"
+                            styleClass="primary-text"
+                            GridPane.columnIndex="1"
+                            GridPane.rowIndex="3"/>
+                    <!-- FECHA DE PAGO EDITABLE -->
+                    <Label text="Fecha de pago "
+                           styleClass="secondary-text"
+                           GridPane.columnIndex="0"
+                           GridPane.rowIndex="2"/>
+
+                    <DatePicker fx:id="dpFechaPago"
+                                maxWidth="Infinity"
+                                styleClass="secondary-combo"
+                                GridPane.columnIndex="1"
+                                GridPane.rowIndex="2"/>
+
+                </GridPane>
+
+            </VBox>
+
+
+            <!-- ================================================= -->
+            <!-- DETALLES DEL PAGO -->
+            <!-- ================================================= -->
+
+            <VBox
+                    spacing="15"
+                    styleClass="admin-option">
+
+                <VBox spacing="3">
+
+                    <Label
+                            styleClass="primary-text"
+                            text="Detalles del pago"/>
+
+                    <Label
+                            styleClass="tertiary-text"
+                            text="Registra la información correspondiente al pago del servicio."/>
+
+                </VBox>
+
+
+                <GridPane hgap="20"
+                          vgap="12">
+
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT"
+                                           hgrow="NEVER"/>
+
+                        <ColumnConstraints hgrow="ALWAYS"
+                                           minWidth="250"/>
+
+                        <ColumnConstraints minWidth="220"
+                                           prefWidth="260"
+                                           hgrow="NEVER"/>
+                    </columnConstraints>
+
+                    <!-- MÉTODO DE PAGO -->
+                    <Label text="Método de pago"
+                           styleClass="secondary-text"
+                           GridPane.columnIndex="0"
+                           GridPane.rowIndex="0"/>
+
+                    <ComboBox fx:id="cmbMetodoPago"
+                              maxWidth="Infinity"
+                              promptText="Seleccionar método"
+                              styleClass="secondary-combo"
+                              GridPane.columnIndex="1"
+                              GridPane.rowIndex="0"/>
+
+                    <!-- OBSERVACIÓN -->
+                    <Label text="Observación"
+                           styleClass="secondary-text"
+                           GridPane.columnIndex="0"
+                           GridPane.rowIndex="1"
+                           GridPane.valignment="TOP"/>
+
+                    <TextArea fx:id="txtObservacion"
+                              prefRowCount="4"
+                              promptText="Observación del pago..."
+                              wrapText="true"
+                              maxWidth="Infinity"
+                              GridPane.columnIndex="1"
+                              GridPane.rowIndex="1"/>
+
+                    <!-- COMPROBANTE: IMAGEN A LA DERECHA -->
+                    <VBox spacing="10"
+                          alignment="TOP_CENTER"
+                          styleClass="secondary-card"
+                          GridPane.columnIndex="2"
+                          GridPane.rowIndex="0"
+                          GridPane.rowSpan="2">
+
+                        <Label text="Comprobante de pago"
+                               styleClass="secondary-text"/>
+
+                        <Button fx:id="btnSubirComprobante"
+                                text="Seleccionar imagen"
+                                maxWidth="Infinity"
+                                onAction="#seleccionarComprobante"
+                                styleClass="secondary-button"/>
+
+                        <!-- VISTA PREVIA DE LA IMAGEN -->
+                        <ImageView fx:id="imgComprobante"
+                                   fitHeight="120"
+                                   fitWidth="200"
+                                   preserveRatio="true"/>
+
+                        <Label fx:id="lblNombreComprobante"
+                               text="Ninguna imagen seleccionada"
+                               wrapText="true"
+                               styleClass="secondary-text"/>
+
+                    </VBox>
+
+                </GridPane>
+
+            </VBox>
+
+
+            <!-- ================================================= -->
+            <!-- BOTONES -->
+            <!-- ================================================= -->
+
+            <HBox
+                    alignment="CENTER_RIGHT"
+                    spacing="10">
+
+                <Button
+                        onAction="#closeForm"
+                        styleClass="secondary-button"
+                        text="Cancelar"/>
+
+                <Button
+                        onAction="#registrarPagoAccion"
+                        styleClass="primary-button"
+                        text="Registrar pago"/>
+
+            </HBox>
+
+        </VBox>
+
+    </ScrollPane>
+
+</AnchorPane>

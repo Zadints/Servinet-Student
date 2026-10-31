@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.example.servinet.core.application.security.PermissionValidation;
 import org.example.servinet.core.application.usecase.AppGeneralUseCase;
+import org.example.servinet.core.application.usecase.ClientsUseCase;
 import org.example.servinet.core.application.usecase.SessionUseCase;
 import org.example.servinet.core.domain.entities.Announcement;
 import org.example.servinet.core.domain.entities.Client;
@@ -70,9 +71,9 @@ public class IndexController {
         boolean b = PermissionValidation.hasPermission(Permission.AD_ACTIVITY_PERSONAL_SECTION);
         boolean c = PermissionValidation.hasPermission(Permission.AD_OWNER_OPTIONS_SECTION);
 
-        show(btnAdministracion, a|b|c);
+        show(btnAdministracion, a|b|c);}
 
-    }
+
     public void abrirModalAnnounce(Runnable onSaved, Announcement announcementToEdit) {
 
         try {
@@ -270,6 +271,9 @@ public class IndexController {
             }
             if (controller instanceof VentasFormController ventasFormController) {
                 ventasFormController.setIndexController(this);
+            }
+            if (controller instanceof RegistrarPagoController registrarPagoController) {
+                registrarPagoController.setIndexController(this);
             }
 
             brPanel.setCenter(vista);
